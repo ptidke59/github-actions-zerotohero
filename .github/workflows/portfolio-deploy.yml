@@ -3,8 +3,8 @@ name: Portfolio
 on:
   push:
     branches: [main]
-    paths:
-      - "**.html"
+    # paths:
+    #   - "**.html"
   workflow_dispatch:
 
 permissions:
