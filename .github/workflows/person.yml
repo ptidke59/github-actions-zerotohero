@@ -1,7 +1,7 @@
 ---
 name: personal information
 on:
-  workflow-branches:
+  workflow_dispatch:
 jobs:
   details:
     runs-on: ubuntu-latest
