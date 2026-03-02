@@ -1,342 +1,1137 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>Pramod Tidke | Lead Software Engineer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pramod Tidke — Lead Software Engineer</title>
 
-    <!-- =========================
-         INTERNAL CSS (Dark Theme)
-    ========================== -->
+    <!--
+    Single-file CSS (inside <style>) as requested.
+    Design: dark hacker/reactive theme with electric-blue / purple accents,
+    card-based layout, responsive (mobile/tablet/desktop), semantic HTML,
+    smooth hover/transition effects, and subtle motion via CSS only.
+  -->
     <style>
+      /* =========================
+       Theme variables & reset
+       ========================= */
       :root {
-        --bg-color: #0f0f14;
-        --card-color: #1a1a22;
-        --accent: #4e9eff;
-        --text-primary: #ffffff;
-        --text-secondary: #b0b0c3;
+        --bg: #0b0e12; /* primary background (very dark) */
+        --panel: #0f1418; /* card / panel background */
+        --muted: #9aa6b2; /* muted text */
+        --accent-1: #5ef; /* electric blue */
+        --accent-2: #8a5cff; /* purple */
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-2: rgba(255, 255, 255, 0.02);
+        --glass-border: rgba(255, 255, 255, 0.04);
+        --radius: 12px;
+        --max-width: 1200px;
+        --fw-bold: 700;
+        --fw-medium: 500;
+        --mono:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          "Courier New", monospace;
+        --sans:
+          Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+          Arial;
       }
 
       * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
-        scroll-behavior: smooth;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
-
+      html,
       body {
-        background-color: var(--bg-color);
-        color: var(--text-primary);
-        line-height: 1.6;
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background:
+          radial-gradient(
+            1200px 600px at 10% 10%,
+            rgba(74, 78, 255, 0.06),
+            transparent 6%
+          ),
+          linear-gradient(180deg, rgba(10, 12, 16, 1) 0%, var(--bg) 40%);
+        color: #e6eef6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1.45;
+        padding: 0 20px;
       }
 
-      section {
-        padding: 80px 10%;
+      /* Subtle animated 'matrix' / hacker background using pseudo elements */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(transparent 30%, rgba(255, 255, 255, 0.01) 31%),
+          repeating-linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.03) 0 1px,
+            transparent 1px 12px
+          );
+        mix-blend-mode: overlay;
+        pointer-events: none;
+        z-index: 0;
+        animation: drift 18s linear infinite;
+        opacity: 0.9;
+        transform: translateZ(0);
+      }
+      @keyframes drift {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0);
+        }
       }
 
-      h2 {
-        font-size: 32px;
-        margin-bottom: 30px;
-        color: var(--accent);
+      /* Layout wrapper */
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        position: relative;
+        z-index: 2; /* above bg motion */
       }
 
       /* =========================
-           HERO SECTION
-        ========================== */
+       Header / Nav
+       ========================= */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 0;
+        color: var(--muted);
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+      }
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+        box-shadow:
+          0 4px 30px rgba(138, 92, 255, 0.12),
+          0 8px 30px rgba(94, 158, 255, 0.08);
+        color: #07101a;
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: 14px;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        margin-left: 18px;
+        font-size: 14px;
+        transition:
+          color 0.2s,
+          transform 0.15s;
+      }
+      nav a:hover {
+        color: var(--accent-1);
+        transform: translateY(-2px);
+      }
+
+      /* =========================
+       Hero Section
+       ========================= */
       .hero {
-        height: 100vh;
+        min-height: calc(100vh - 80px);
+        display: grid;
+        align-items: center;
+        gap: 28px;
+        padding: 40px 0 80px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 28px;
+        align-items: center;
+      }
+      .hero-card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        border: 1px solid var(--glass-border);
+        padding: 36px;
+        border-radius: 16px;
+        box-shadow: 0 6px 30px rgba(6, 9, 12, 0.6);
+        backdrop-filter: blur(6px);
+      }
+      .eyebrow {
+        font-family: var(--mono);
+        color: var(--accent-1);
+        font-size: 13px;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: clamp(30px, 5.5vw, 46px);
+        margin: 0 0 12px 0;
+        line-height: 1.02;
+        letter-spacing: -0.6px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      h2.title {
+        font-size: 18px;
+        margin: 0 0 10px;
+        color: #cfe8ff;
+        font-weight: 600;
+      }
+      .tagline {
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+      .cta {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        color: #07101a;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 8px 24px rgba(94, 158, 255, 0.12);
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .cta:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 36px rgba(138, 92, 255, 0.18);
+      }
+
+      /* Neon code-block style info on the right */
+      .hero-side {
+        padding: 28px;
+        border-radius: 12px;
+        background:
+          linear-gradient(180deg, rgba(12, 16, 20, 0.6), rgba(12, 16, 20, 0.4)),
+          conic-gradient(
+            from 180deg at 50% 50%,
+            rgba(94, 94, 255, 0.03),
+            transparent 30%
+          );
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.02),
+          0 10px 30px rgba(2, 8, 20, 0.6);
+      }
+      .meta-list {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
+        gap: 10px;
+        color: var(--muted);
+      }
+      .meta-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        font-size: 14px;
+      }
+      .meta-item .label {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .meta-item .value {
+        font-weight: 600;
+        color: #dbefff;
       }
 
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .hero h1 span {
-        color: var(--accent);
-      }
-
-      .hero h3 {
-        margin: 15px 0;
-        font-weight: 400;
-        color: var(--text-secondary);
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 12px 25px;
-        background-color: var(--accent);
-        color: #fff;
-        text-decoration: none;
-        border-radius: 6px;
-        margin-top: 20px;
-        transition: 0.3s ease;
-      }
-
-      .btn:hover {
-        background-color: #367de0;
-        transform: translateY(-3px);
+      /* animated scanline across hero side to emphasize 'reactive' */
+      .hero-side::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: auto;
       }
 
       /* =========================
-           CARD STYLING
-        ========================== */
-      .card-container {
+       Sections (About, Skills, etc.)
+       ========================= */
+      main {
+        padding-bottom: 40px;
+      }
+      section {
+        margin: 36px 0;
+        padding: 28px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border-radius: 14px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      }
+      section h3 {
+        margin: 0 0 18px 0;
+        font-size: 18px;
+        color: #dff0ff;
+        font-weight: 700;
+      }
+      p.lead {
+        color: var(--muted);
+        margin: 0 0 6px 0;
+        font-size: 15px;
+      }
+
+      /* ABOUT layout */
+      .about {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: 1fr 300px;
         gap: 20px;
+        align-items: start;
       }
-
-      .card {
-        background-color: var(--card-color);
-        padding: 20px;
+      .about .bio {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.6;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        padding: 18px;
         border-radius: 10px;
-        transition: 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .about .quick {
+        padding: 16px;
+        border-radius: 10px;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        color: var(--muted);
       }
 
-      .card:hover {
-        transform: translateY(-5px);
-        border: 1px solid var(--accent);
+      /* Skills cards grid */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+      .skill-card {
+        padding: 16px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s;
+      }
+      .skill-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 10px 40px rgba(74, 78, 255, 0.06);
+      }
+      .skill-card h4 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        color: #dff;
+        font-weight: 700;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag {
+        font-size: 13px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        font-weight: 600;
+      }
+      .tag .dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 8px;
+        vertical-align: middle;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        box-shadow: 0 4px 12px rgba(94, 158, 255, 0.12);
       }
 
-      .card h3 {
-        margin-bottom: 10px;
-        color: var(--accent);
+      /* Work experience */
+      .work-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .job {
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        background: var(--panel);
+        transition: transform 0.18s;
+      }
+      .job:hover {
+        transform: translateY(-6px);
+      }
+      .job .company {
+        font-weight: 700;
+        color: #dff;
+        font-size: 15px;
+      }
+      .job .role {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      .project {
+        margin: 10px 0;
+        padding: 12px;
+        border-radius: 9px;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent);
+        border: 1px solid rgba(255, 255, 255, 0.01);
+      }
+      .project h5 {
+        margin: 0 0 6px 0;
+        font-size: 14px;
+        color: #e8f7ff;
+      }
+      .project ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
       }
 
-      ul {
-        list-style: none;
+      /* Certifications / Achievements */
+      .badges {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        font-weight: 600;
+        color: var(--muted);
+        font-size: 13px;
       }
 
-      ul li {
-        margin-bottom: 6px;
-        color: var(--text-secondary);
+      /* Education */
+      .edu {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .edu .school {
+        font-weight: 700;
+        color: #dff;
+      }
+      .edu .meta {
+        color: var(--muted);
+        font-size: 13px;
       }
 
-      /* =========================
-           EXPERIENCE SECTION
-        ========================== */
-      .experience-item {
-        margin-bottom: 40px;
+      /* Contact */
+      .contact-grid {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
       }
-
-      .experience-item h3 {
-        color: var(--accent);
-        margin-bottom: 10px;
+      .contact-card {
+        flex: 1 1 180px;
+        padding: 12px;
+        border-radius: 10px;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        color: var(--muted);
       }
-
-      /* =========================
-           CONTACT SECTION
-        ========================== */
-      .contact a {
-        display: block;
-        margin-bottom: 10px;
-        color: var(--text-secondary);
+      .contact-card a {
+        color: var(--accent-1);
         text-decoration: none;
+        font-weight: 700;
       }
 
-      .contact a:hover {
-        color: var(--accent);
-      }
-
-      /* =========================
-           FOOTER
-        ========================== */
+      /* Footer */
       footer {
         text-align: center;
-        padding: 20px;
-        background-color: #0b0b10;
-        color: var(--text-secondary);
+        padding: 18px 0;
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 26px;
+      }
+      .socials {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 8px;
+      }
+      .socials a {
+        display: inline-grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--glass-2);
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .socials a:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 36px rgba(94, 158, 255, 0.08);
+        color: #fff;
       }
 
-      /* =========================
-           RESPONSIVE
-        ========================== */
-      @media (max-width: 768px) {
-        .hero h1 {
-          font-size: 36px;
+      /* Responsive adjustments */
+      @media (max-width: 980px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
         }
-
+        .about {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          padding-bottom: 40px;
+        }
+        .hero-side {
+          order: 2;
+        }
+      }
+      @media (max-width: 560px) {
+        header {
+          padding: 12px 0;
+        }
+        .logo {
+          width: 36px;
+          height: 36px;
+          font-size: 13px;
+        }
+        .hero-card {
+          padding: 24px;
+        }
+        .hero-side {
+          padding: 16px;
+        }
+        nav {
+          display: none;
+        }
+        .container {
+          padding: 0 12px;
+        }
+        .skills-grid {
+          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
         section {
-          padding: 60px 5%;
+          padding: 18px;
         }
+      }
+
+      /* small decorative animations for headings */
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .section-title .line {
+        width: 40px;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        opacity: 0.9;
       }
     </style>
   </head>
-
   <body>
-    <!-- =========================
-     HERO SECTION
-========================= -->
-    <section class="hero">
-      <h1>Hello, I'm <span>Pramod Tidke</span></h1>
-      <h2>Lead Software Engineer</h2>
-      <h3>Automation | Cloud | DevOps | CI/CD Specialist</h3>
-      <a href="#experience" class="btn">View My Work</a>
-    </section>
+    <div class="container">
+      <!-- Header / top navigation -->
+      <header role="banner" aria-label="Top Navigation">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">PT</div>
+          <div>
+            <div style="font-weight: 800">Pramod Tidke</div>
+            <div style="font-size: 12px; color: var(--muted)">
+              Lead Software Engineer
+            </div>
+          </div>
+        </div>
+        <nav role="navigation" aria-label="Main Navigation">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#work">Work</a>
+          <a href="#certs">Certifications</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
 
-    <!-- =========================
-     ABOUT SECTION
-========================= -->
-    <section>
-      <h2>About Me</h2>
-      <p>
-        Lead Software Engineer with 3.8 years of experience in automation, CI/CD
-        environments, and cloud-native platforms. Proficient in Python and Shell
-        scripting, with strong hands-on experience in Jenkins pipelines,
-        OpenShift, container orchestration, and cloud-based integrations.
-        Skilled in IBM Cloud Pak for Data and automation frameworks such as
-        Robot Framework. Fast learner with strong communication and
-        collaboration skills.
-      </p>
-    </section>
+      <!-- HERO SECTION -->
+      <!-- Full-screen modern hero with large highlighted name, role, tagline and CTA -->
+      <section class="hero" id="home" aria-label="Hero">
+        <div class="hero-grid">
+          <div class="hero-card" aria-hidden="false">
+            <div class="eyebrow">Lead Software Engineer</div>
+            <h1>Pramod Tidke</h1>
+            <div class="title">
+              Automation | Cloud | DevOps | CI/CD Specialist
+            </div>
+            <p class="tagline">
+              Lead Software Engineer with ~3.8 years of hands-on experience in
+              automation, CI/CD pipelines, cloud-native platforms and container
+              orchestration. Strong in Python, Shell, Jenkins, OpenShift and
+              automation frameworks.
+            </p>
 
-    <!-- =========================
-     SKILLS SECTION
-========================= -->
-    <section>
-      <h2>Skills</h2>
-      <div class="card-container">
-        <div class="card">
-          <h3>Operating Systems</h3>
-          <ul>
-            <li>Linux</li>
-            <li>Windows</li>
+            <!-- CTA anchors to Work section -->
+            <a class="cta" href="#work">View My Work</a>
+          </div>
+
+          <!-- Right-side hero panel with quick facts and optional "image" -->
+          <aside class="hero-side" aria-hidden="true">
+            <!-- Optional decorative SVG 'avatar / device' -->
+            <div
+              style="
+                display: flex;
+                gap: 14px;
+                align-items: center;
+                margin-bottom: 14px;
+              "
+            >
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                role="img"
+              >
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="#5ef" />
+                    <stop offset="1" stop-color="#8a5cff" />
+                  </linearGradient>
+                </defs>
+                <rect rx="12" width="64" height="64" fill="url(#g1)" />
+                <text
+                  x="50%"
+                  y="58%"
+                  text-anchor="middle"
+                  font-family="var(--mono)"
+                  font-weight="700"
+                  font-size="26"
+                  fill="#07101a"
+                >
+                  PT
+                </text>
+              </svg>
+              <div>
+                <div style="font-weight: 700; color: #e6f7ff">Pramod Tidke</div>
+                <div style="color: var(--muted); font-size: 13px">
+                  Lead Software Engineer — IBM
+                </div>
+              </div>
+            </div>
+
+            <!-- meta list -->
+            <div class="meta-list">
+              <div class="meta-item">
+                <span class="label">Experience</span
+                ><span class="value">3.8 Years</span>
+              </div>
+              <div class="meta-item">
+                <span class="label">Primary Skills</span
+                ><span class="value">Python • Shell • Jenkins</span>
+              </div>
+              <div class="meta-item">
+                <span class="label">Platforms</span
+                ><span class="value">OpenShift • Kubernetes • IBM CP4D</span>
+              </div>
+              <div class="meta-item">
+                <span class="label">Work Style</span
+                ><span class="value">Automation • CI/CD • Agile</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <main>
+        <!-- ABOUT SECTION -->
+        <!-- Professional summary paragraph with clean layout -->
+        <section id="about" aria-labelledby="about-title">
+          <div class="section-title" id="about-title">
+            <div class="line"></div>
+            <h3>About Me</h3>
+          </div>
+          <div class="about" role="region" aria-label="About Pramod Tidke">
+            <div class="bio">
+              <!-- Professional summary -->
+              <p class="lead">
+                Lead Software Engineer with 3.8 years of experience building
+                automation across CI/CD pipelines and cloud-native platforms. I
+                design and maintain pipelines in Jenkins and Travis CI, automate
+                tests & deployments using Python and Shell scripting, and debug
+                containerized workloads on OpenShift and Kubernetes. Experienced
+                with IBM Cloud Pak for Data (CP4D), vulnerability scanning
+                tools, and collaborative Agile environments. Quick learner,
+                strong communicator and team player.
+              </p>
+              <p style="margin-top: 12px; color: var(--muted)">
+                Focus areas: automation frameworks, CI/CD resilience, container
+                debugging, cross-architecture packaging, and secure cloud
+                deployments.
+              </p>
+            </div>
+
+            <div class="quick" aria-hidden="false">
+              <div style="font-weight: 700; margin-bottom: 8px; color: #e6f7ff">
+                Quick Facts
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="font-size: 13px; color: var(--muted)">
+                  Current/Previous Client:
+                  <strong style="color: #dff">IBM</strong>
+                </div>
+                <div style="font-size: 13px; color: var(--muted)">
+                  Location: <strong style="color: #dff">India</strong>
+                </div>
+                <div style="font-size: 13px; color: var(--muted)">
+                  Tools:
+                  <strong style="color: #dff"
+                    >Jenkins, OpenShift, Docker, Trivy</strong
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <!-- Organized in categories using cards layout -->
+        <section id="skills" aria-labelledby="skills-title">
+          <div class="section-title" id="skills-title">
+            <div class="line"></div>
+            <h3>Skills</h3>
+          </div>
+
+          <div class="skills-grid" role="list">
+            <!-- Operating Systems -->
+            <article
+              class="skill-card"
+              role="listitem"
+              aria-label="Operating Systems"
+            >
+              <h4>Operating Systems</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>Linux</div>
+                <div class="tag"><span class="dot"></span>Windows</div>
+              </div>
+            </article>
+
+            <!-- Cloud Platforms -->
+            <article
+              class="skill-card"
+              role="listitem"
+              aria-label="Cloud Platforms"
+            >
+              <h4>Cloud Platforms</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>Azure</div>
+                <div class="tag"><span class="dot"></span>AWS</div>
+              </div>
+            </article>
+
+            <!-- Version Control -->
+            <article
+              class="skill-card"
+              role="listitem"
+              aria-label="Version Control"
+            >
+              <h4>Version Control</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>Git</div>
+                <div class="tag"><span class="dot"></span>GitHub</div>
+                <div class="tag"><span class="dot"></span>GitLab</div>
+                <div class="tag"><span class="dot"></span>Bitbucket</div>
+              </div>
+            </article>
+
+            <!-- Scripting Languages -->
+            <article
+              class="skill-card"
+              role="listitem"
+              aria-label="Scripting Languages"
+            >
+              <h4>Scripting Languages</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>Python</div>
+                <div class="tag"><span class="dot"></span>Bash</div>
+                <div class="tag"><span class="dot"></span>Groovy</div>
+                <div class="tag"><span class="dot"></span>YAML</div>
+              </div>
+            </article>
+
+            <!-- CI/CD -->
+            <article class="skill-card" role="listitem" aria-label="CI/CD">
+              <h4>CI/CD</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>Jenkins</div>
+                <div class="tag"><span class="dot"></span>Travis CI</div>
+              </div>
+            </article>
+
+            <!-- Containerization -->
+            <article
+              class="skill-card"
+              role="listitem"
+              aria-label="Containerization"
+            >
+              <h4>Containerization</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>Docker</div>
+                <div class="tag"><span class="dot"></span>OpenShift</div>
+                <div class="tag"><span class="dot"></span>Kubernetes</div>
+              </div>
+            </article>
+
+            <!-- Automation & Config -->
+            <article
+              class="skill-card"
+              role="listitem"
+              aria-label="Automation and Configuration"
+            >
+              <h4>Automation & Config</h4>
+              <div class="skill-tags">
+                <div class="tag">
+                  <span class="dot"></span>Terraform
+                  <small style="opacity: 0.7; margin-left: 6px"
+                    >(learning)</small
+                  >
+                </div>
+                <div class="tag">
+                  <span class="dot"></span>Ansible
+                  <small style="opacity: 0.7; margin-left: 6px"
+                    >(learning)</small
+                  >
+                </div>
+              </div>
+            </article>
+
+            <!-- Tools -->
+            <article class="skill-card" role="listitem" aria-label="Tools">
+              <h4>Tools</h4>
+              <div class="skill-tags">
+                <div class="tag"><span class="dot"></span>VS Code</div>
+                <div class="tag"><span class="dot"></span>Eclipse</div>
+                <div class="tag"><span class="dot"></span>Postman</div>
+                <div class="tag"><span class="dot"></span>CP4D</div>
+                <div class="tag"><span class="dot"></span>JIRA</div>
+                <div class="tag"><span class="dot"></span>Trello</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- WORK EXPERIENCE SECTION -->
+        <!-- Semantic articles for company + projects -->
+        <section id="work" aria-labelledby="work-title">
+          <div class="section-title" id="work-title">
+            <div class="line"></div>
+            <h3>Work Experience</h3>
+          </div>
+
+          <div class="work-list">
+            <article class="job" aria-label="IBM — Lead Software Engineer">
+              <div class="company">IBM</div>
+              <div class="role">
+                Lead Software Engineer — Projects on OpenShift & CP4D
+              </div>
+
+              <!-- Project 1 -->
+              <div
+                class="project"
+                aria-label="Project: OpenShift on Power Servers"
+              >
+                <h5>Project: OpenShift on Power Servers</h5>
+                <ul>
+                  <li>
+                    Ported packages from x86 to ppc64le to enable OpenShift
+                    workloads on IBM Power architecture.
+                  </li>
+                  <li>
+                    Automated deployment and packaging tasks using Shell
+                    scripting and Travis CI pipelines.
+                  </li>
+                  <li>
+                    Resolved architecture compatibility issues and validated
+                    builds.
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Project 2 -->
+              <div
+                class="project"
+                aria-label="Project: IBM Cloud Pak for Data (CP4D)"
+              >
+                <h5>Project: IBM Cloud Pak for Data (CP4D)</h5>
+                <ul>
+                  <li>
+                    CP4D validation on IBM Power servers and environment setup.
+                  </li>
+                  <li>
+                    Monitored Jenkins pipelines and built UI testing & reporting
+                    workflows.
+                  </li>
+                  <li>
+                    Debugged using pod-level logs, REST APIs and OpenShift
+                    debugging commands.
+                  </li>
+                  <li>
+                    Automated test-cases using Python and Robot Framework.
+                  </li>
+                  <li>
+                    Performed vulnerability scanning using Trivy, Clair, Aqua
+                    (AquaSec), Twistlock.
+                  </li>
+                  <li>
+                    CI/CD pipeline troubleshooting and active Agile/Scrum
+                    collaboration.
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- CERTIFICATIONS -->
+        <section id="certs" aria-labelledby="certs-title">
+          <div class="section-title" id="certs-title">
+            <div class="line"></div>
+            <h3>Certifications</h3>
+          </div>
+          <div class="badges" role="list">
+            <div class="badge" role="listitem">
+              Microsoft Azure AZ-900 — 05/22
+            </div>
+            <div class="badge" role="listitem">
+              Microsoft Azure DP-900 — 10/23
+            </div>
+            <div class="badge" role="listitem">
+              Microsoft Azure AI-900 — 06/24
+            </div>
+            <div class="badge" role="listitem">CKAD Course (Udemy)</div>
+            <div class="badge" role="listitem">
+              Ultimate DevOps Bootcamp (Udemy)
+            </div>
+          </div>
+        </section>
+
+        <!-- ACHIEVEMENTS -->
+        <section id="achievements" aria-labelledby="achieve-title">
+          <div class="section-title" id="achieve-title">
+            <div class="line"></div>
+            <h3>Achievements</h3>
+          </div>
+          <ul style="color: var(--muted); margin: 0; padding-left: 18px">
+            <li><strong>Persistent Bravo Team Award</strong> — Sept 2024</li>
+            <li><strong>Persistent Bravo Team Award</strong> — Jan 2025</li>
+            <li>
+              <strong>Client Appreciation</strong> for critical tasks and timely
+              delivery
+            </li>
           </ul>
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education" aria-labelledby="edu-title">
+          <div class="section-title" id="edu-title">
+            <div class="line"></div>
+            <h3>Education</h3>
+          </div>
+          <div class="edu">
+            <div>
+              <div class="school">B.Tech — Electrical Engineering</div>
+              <div class="meta">YCCE Nagpur, 2021 • CGPA: 7.08</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" aria-labelledby="contact-title">
+          <div class="section-title" id="contact-title">
+            <div class="line"></div>
+            <h3>Contact</h3>
+          </div>
+
+          <!-- Contact cards (placeholders) -->
+          <div class="contact-grid">
+            <div class="contact-card">
+              <div style="font-weight: 700">Email</div>
+              <div style="color: var(--muted); margin-top: 6px">
+                your.email@example.com
+              </div>
+              <div style="margin-top: 8px">
+                <a href="mailto:your.email@example.com">Send Email</a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div style="font-weight: 700">LinkedIn</div>
+              <div style="color: var(--muted); margin-top: 6px">
+                linkedin.com/in/yourprofile
+              </div>
+              <div style="margin-top: 8px">
+                <a href="#" aria-label="LinkedIn Profile">Visit LinkedIn</a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div style="font-weight: 700">GitHub</div>
+              <div style="color: var(--muted); margin-top: 6px">
+                github.com/yourusername
+              </div>
+              <div style="margin-top: 8px">
+                <a href="#" aria-label="GitHub Profile">View GitHub</a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div style="font-weight: 700">Phone</div>
+              <div style="color: var(--muted); margin-top: 6px">
+                +91-XXXXXXXXXX
+              </div>
+              <div style="margin-top: 8px">
+                <a href="tel:+911234567890">Call</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer role="contentinfo">
+        <div>
+          © <strong>Pramod Tidke</strong> — Lead Software Engineer • All rights
+          reserved
         </div>
 
-        <div class="card">
-          <h3>Cloud Platforms</h3>
-          <ul>
-            <li>Azure</li>
-            <li>AWS</li>
-          </ul>
+        <!-- Social icons implemented in pure HTML + inline SVG (no external icons) -->
+        <div class="socials" aria-label="Social Links">
+          <a href="#" title="LinkedIn" aria-label="LinkedIn">
+            <!-- LinkedIn SVG -->
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4.98 3.5C4.98 4.6 4.14 5.5 3.02 5.5 1.9 5.5 1 4.6 1 3.5 1 2.4 1.9 1.5 3.02 1.5 4.14 1.5 4.98 2.4 4.98 3.5z"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M1 8.5h4v12H1zM8.5 8.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4.1 0 4.8 2.6 4.8 6v6.4h-4v-5.7c0-1.4 0-3.2-2-3.2-2 0-2.3 1.6-2.3 3.1V20.5h-4z"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+
+          <a href="#" title="GitHub" aria-label="GitHub">
+            <!-- GitHub SVG -->
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 .5C5.8.5.9 5.4.9 11.6c0 4.8 3.1 8.9 7.4 10.3.6.1.8-.3.8-.6v-2.1c-3 .6-3.6-1.4-3.6-1.4-.6-1.6-1.4-2-1.4-2-1.2-.8.1-.8.1-.8 1.4.1 2.1 1.5 2.1 1.5 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.4-.3-4.9-1.2-4.9-5.4 0-1.2.5-2.1 1.3-2.8-.1-.4-.6-1.6.1-3.3 0 0 1-.3 3.4 1.3 1-.3 2.1-.4 3.2-.4 1.1 0 2.2.1 3.2.4 2.3-1.6 3.4-1.3 3.4-1.3.7 1.7.2 2.9.1 3.3.8.7 1.3 1.6 1.3 2.8 0 4.2-2.5 5.1-4.9 5.4.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.3-1.4 7.4-5.5 7.4-10.3C23.1 5.4 18.2.5 12 .5z"
+                stroke="currentColor"
+                stroke-width="0.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+
+          <a href="#" title="Mail" aria-label="Email">
+            <!-- Mail SVG -->
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 6.5h18v11H3z"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3 6.5l9 6 9-6"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
         </div>
+      </footer>
+    </div>
 
-        <div class="card">
-          <h3>Version Control</h3>
-          <ul>
-            <li>Git</li>
-            <li>GitHub</li>
-            <li>GitLab</li>
-            <li>Bitbucket</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Scripting</h3>
-          <ul>
-            <li>Python</li>
-            <li>Bash</li>
-            <li>Groovy</li>
-            <li>YAML</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>CI/CD</h3>
-          <ul>
-            <li>Jenkins</li>
-            <li>Travis CI</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Containerization</h3>
-          <ul>
-            <li>Docker</li>
-            <li>OpenShift</li>
-            <li>Kubernetes</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-     EXPERIENCE SECTION
-========================= -->
-    <section id="experience">
-      <h2>Work Experience - IBM</h2>
-
-      <div class="experience-item">
-        <h3>Project: OpenShift on Power Servers</h3>
-        <ul>
-          <li>Ported packages from x86 to ppc64le architecture.</li>
-          <li>Automated deployment using Shell & Travis CI.</li>
-          <li>Resolved architecture compatibility issues.</li>
-        </ul>
-      </div>
-
-      <div class="experience-item">
-        <h3>Project: IBM Cloud Pak for Data (CP4D)</h3>
-        <ul>
-          <li>CP4D validation on IBM Power architecture.</li>
-          <li>Jenkins pipeline monitoring & UI testing.</li>
-          <li>Debugging using logs, REST APIs & OpenShift pods.</li>
-          <li>Automation using Python & Robot Framework.</li>
-          <li>Kubernetes & OpenShift pod-level debugging.</li>
-          <li>Vulnerability scanning with Trivy, Clair, Aquasec, Twistlock.</li>
-          <li>CI/CD troubleshooting & Agile Scrum participation.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- =========================
-     CERTIFICATIONS SECTION
-========================= -->
-    <section>
-      <h2>Certifications</h2>
-      <ul>
-        <li>Microsoft Azure AZ-900 (05/22)</li>
-        <li>Microsoft Azure DP-900 (10/23)</li>
-        <li>Microsoft Azure AI-900 (06/24)</li>
-        <li>CKAD Course - Udemy</li>
-        <li>Ultimate DevOps Bootcamp - Udemy</li>
-      </ul>
-    </section>
-
-    <!-- =========================
-     ACHIEVEMENTS SECTION
-========================= -->
-    <section>
-      <h2>Achievements</h2>
-      <ul>
-        <li>Persistent Bravo Team Award (Sept 2024)</li>
-        <li>Persistent Bravo Team Award (Jan 2025)</li>
-        <li>Client Appreciation for critical task completion</li>
-      </ul>
-    </section>
-
-    <!-- =========================
-     EDUCATION SECTION
-========================= -->
-    <section>
-      <h2>Education</h2>
-      <p>
-        B.Tech Electrical Engineering <br />
-        YCCE Nagpur <br />
-        2021 | CGPA: 7.08
-      </p>
-    </section>
-
-    <!-- =========================
-     CONTACT SECTION
-========================= -->
-    <section class="contact">
-      <h2>Contact</h2>
-      <a href="#">Email: yourmail@example.com</a>
-      <a href="#">LinkedIn: linkedin.com/in/yourprofile</a>
-      <a href="#">GitHub: github.com/yourprofile</a>
-      <a href="#">Phone: +91-XXXXXXXXXX</a>
-    </section>
-
-    <!-- =========================
-     FOOTER
-========================= -->
-    <footer>© 2026 Pramod Tidke | Built with HTML & CSS</footer>
-  </body>
+    <!--
+    Notes & comments:
+    - No JavaScript used. All interactive/animated feel created via CSS transitions and keyframes.
+    - Replace placeholder contact links and text with real links and emails.
+    - To add optional images, replace the SVG avatar with an <img> element and style it inside .hero-side.
+    - For additional sections (projects, blog), duplicate pattern used in Work Experience and Skills.
+    - All CSS is inside <style> to meet the "single file" requirement.
+  --></body>
 </html>
