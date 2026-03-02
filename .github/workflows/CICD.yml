@@ -1,0 +1,32 @@
+name: CICD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+
+  code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        run: echo "code clone from Github"
+
+  build: 
+     runs-on: ubuntu-latest
+     steps:
+         - name: Build the app
+           runs: echo "building the app"
+    
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test the container
+        run: echo " testing the container "
+
+  deploy:
+    runs-on: 
+    steps:
+        - name: Deploying the app
+         run: echo "Docker compose deployed the app"
