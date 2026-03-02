@@ -1,202 +1,342 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pawan Thirukay | Digital Marketer & Developer</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pramod Tidke | Lead Software Engineer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
+    <!-- =========================
+         INTERNAL CSS (Dark Theme)
+    ========================== -->
+    <style>
+      :root {
+        --bg-color: #0f0f14;
+        --card-color: #1a1a22;
+        --accent: #4e9eff;
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0c3;
+      }
 
-body{
-    background:#0f172a;
-    color:white;
-    line-height:1.6;
-}
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-header{
-    background:#111827;
-    padding:20px 10%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
 
-.logo{
-    font-size:24px;
-    font-weight:bold;
-    color:#38bdf8;
-}
+      section {
+        padding: 80px 10%;
+      }
 
-nav a{
-    color:white;
-    margin-left:20px;
-    text-decoration:none;
-    font-size:15px;
-}
+      h2 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: var(--accent);
+      }
 
-nav a:hover{
-    color:#38bdf8;
-}
+      /* =========================
+           HERO SECTION
+        ========================== */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
 
-.hero{
-    padding:100px 10%;
-}
+      .hero h1 {
+        font-size: 48px;
+      }
 
-.hero h1{
-    font-size:48px;
-    margin-bottom:20px;
-}
+      .hero h1 span {
+        color: var(--accent);
+      }
 
-.hero span{
-    color:#38bdf8;
-}
+      .hero h3 {
+        margin: 15px 0;
+        font-weight: 400;
+        color: var(--text-secondary);
+      }
 
-.hero p{
-    max-width:600px;
-    margin-bottom:30px;
-    color:#cbd5e1;
-}
+      .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        margin-top: 20px;
+        transition: 0.3s ease;
+      }
 
-.btn{
-    padding:12px 25px;
-    background:#38bdf8;
-    color:black;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-    border-radius:5px;
-    text-decoration:none;
-}
+      .btn:hover {
+        background-color: #367de0;
+        transform: translateY(-3px);
+      }
 
-section{
-    padding:80px 10%;
-}
+      /* =========================
+           CARD STYLING
+        ========================== */
+      .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
 
-h2{
-    font-size:32px;
-    margin-bottom:30px;
-    text-align:center;
-    color:#38bdf8;
-}
+      .card {
+        background-color: var(--card-color);
+        padding: 20px;
+        border-radius: 10px;
+        transition: 0.3s ease;
+      }
 
-.skills, .projects{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-    gap:20px;
-}
+      .card:hover {
+        transform: translateY(-5px);
+        border: 1px solid var(--accent);
+      }
 
-.card{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-}
+      .card h3 {
+        margin-bottom: 10px;
+        color: var(--accent);
+      }
 
-.card h3{
-    margin-bottom:10px;
-}
+      ul {
+        list-style: none;
+      }
 
-footer{
-    text-align:center;
-    padding:30px;
-    background:#111827;
-    margin-top:40px;
-}
+      ul li {
+        margin-bottom: 6px;
+        color: var(--text-secondary);
+      }
 
-footer p{
-    color:#94a3b8;
-}
-</style>
-</head>
+      /* =========================
+           EXPERIENCE SECTION
+        ========================== */
+      .experience-item {
+        margin-bottom: 40px;
+      }
 
-<body>
+      .experience-item h3 {
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
 
-<header>
-    <div class="logo">Pawan.</div>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
+      /* =========================
+           CONTACT SECTION
+        ========================== */
+      .contact a {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--text-secondary);
+        text-decoration: none;
+      }
 
-<section class="hero">
-    <h1>Hi, I'm <span>Pawan Thirukay</span></h1>
-    <p>
-        Digital Marketer & Developer helping businesses generate leads,
-        build strong online presence and scale with performance marketing.
-    </p>
-    <a href="#contact" class="btn">Work With Me</a>
-</section>
+      .contact a:hover {
+        color: var(--accent);
+      }
 
-<section id="about">
-    <h2>About Me</h2>
-    <p style="text-align:center; max-width:700px; margin:auto; color:#cbd5e1;">
-        I am a digital entrepreneur from India focused on Meta Ads,
-        performance marketing and web development. I help solar and home
-        improvement businesses generate qualified leads and grow revenue.
-    </p>
-</section>
+      /* =========================
+           FOOTER
+        ========================== */
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #0b0b10;
+        color: var(--text-secondary);
+      }
 
-<section id="skills">
-    <h2>My Skills</h2>
-    <div class="skills">
+      /* =========================
+           RESPONSIVE
+        ========================== */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 36px;
+        }
+
+        section {
+          padding: 60px 5%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =========================
+     HERO SECTION
+========================= -->
+    <section class="hero">
+      <h1>Hello, I'm <span>Pramod Tidke</span></h1>
+      <h2>Lead Software Engineer</h2>
+      <h3>Automation | Cloud | DevOps | CI/CD Specialist</h3>
+      <a href="#experience" class="btn">View My Work</a>
+    </section>
+
+    <!-- =========================
+     ABOUT SECTION
+========================= -->
+    <section>
+      <h2>About Me</h2>
+      <p>
+        Lead Software Engineer with 3.8 years of experience in automation, CI/CD
+        environments, and cloud-native platforms. Proficient in Python and Shell
+        scripting, with strong hands-on experience in Jenkins pipelines,
+        OpenShift, container orchestration, and cloud-based integrations.
+        Skilled in IBM Cloud Pak for Data and automation frameworks such as
+        Robot Framework. Fast learner with strong communication and
+        collaboration skills.
+      </p>
+    </section>
+
+    <!-- =========================
+     SKILLS SECTION
+========================= -->
+    <section>
+      <h2>Skills</h2>
+      <div class="card-container">
         <div class="card">
-            <h3>Meta & Google Ads</h3>
-            <p>Lead generation campaigns, funnel strategy and optimization.</p>
+          <h3>Operating Systems</h3>
+          <ul>
+            <li>Linux</li>
+            <li>Windows</li>
+          </ul>
         </div>
-        <div class="card">
-            <h3>Website Development</h3>
-            <p>Responsive websites using HTML, CSS and modern tools.</p>
-        </div>
-        <div class="card">
-            <h3>Sales & Communication</h3>
-            <p>Client outreach, positioning and offer building.</p>
-        </div>
-        <div class="card">
-            <h3>Python & Automation</h3>
-            <p>Learning backend logic and workflow automation systems.</p>
-        </div>
-    </div>
-</section>
 
-<section id="projects">
-    <h2>Projects</h2>
-    <div class="projects">
         <div class="card">
-            <h3>Solar Lead Generation</h3>
-            <p>Built funnel and Meta Ads strategy for solar businesses targeting US market.</p>
+          <h3>Cloud Platforms</h3>
+          <ul>
+            <li>Azure</li>
+            <li>AWS</li>
+          </ul>
         </div>
+
         <div class="card">
-            <h3>Home Remodeling Campaign</h3>
-            <p>Created high converting landing pages for home improvement clients.</p>
+          <h3>Version Control</h3>
+          <ul>
+            <li>Git</li>
+            <li>GitHub</li>
+            <li>GitLab</li>
+            <li>Bitbucket</li>
+          </ul>
         </div>
+
         <div class="card">
-            <h3>Personal Brand Growth</h3>
-            <p>Content strategy and Reels-focused growth plan.</p>
+          <h3>Scripting</h3>
+          <ul>
+            <li>Python</li>
+            <li>Bash</li>
+            <li>Groovy</li>
+            <li>YAML</li>
+          </ul>
         </div>
-    </div>
-</section>
 
-<section id="contact">
-    <h2>Contact Me</h2>
-    <p style="text-align:center; margin-bottom:20px; color:#cbd5e1;">
-        Let's build something powerful together.
-    </p>
-    <div style="text-align:center;">
-        <a href="mailto:your-email@example.com" class="btn">Email Me</a>
-    </div>
-</section>
+        <div class="card">
+          <h3>CI/CD</h3>
+          <ul>
+            <li>Jenkins</li>
+            <li>Travis CI</li>
+          </ul>
+        </div>
 
-<footer>
-    <p>© 2026 Pawan Thirukay | All Rights Reserved</p>
-</footer>
+        <div class="card">
+          <h3>Containerization</h3>
+          <ul>
+            <li>Docker</li>
+            <li>OpenShift</li>
+            <li>Kubernetes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-</body>
+    <!-- =========================
+     EXPERIENCE SECTION
+========================= -->
+    <section id="experience">
+      <h2>Work Experience - IBM</h2>
+
+      <div class="experience-item">
+        <h3>Project: OpenShift on Power Servers</h3>
+        <ul>
+          <li>Ported packages from x86 to ppc64le architecture.</li>
+          <li>Automated deployment using Shell & Travis CI.</li>
+          <li>Resolved architecture compatibility issues.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <h3>Project: IBM Cloud Pak for Data (CP4D)</h3>
+        <ul>
+          <li>CP4D validation on IBM Power architecture.</li>
+          <li>Jenkins pipeline monitoring & UI testing.</li>
+          <li>Debugging using logs, REST APIs & OpenShift pods.</li>
+          <li>Automation using Python & Robot Framework.</li>
+          <li>Kubernetes & OpenShift pod-level debugging.</li>
+          <li>Vulnerability scanning with Trivy, Clair, Aquasec, Twistlock.</li>
+          <li>CI/CD troubleshooting & Agile Scrum participation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =========================
+     CERTIFICATIONS SECTION
+========================= -->
+    <section>
+      <h2>Certifications</h2>
+      <ul>
+        <li>Microsoft Azure AZ-900 (05/22)</li>
+        <li>Microsoft Azure DP-900 (10/23)</li>
+        <li>Microsoft Azure AI-900 (06/24)</li>
+        <li>CKAD Course - Udemy</li>
+        <li>Ultimate DevOps Bootcamp - Udemy</li>
+      </ul>
+    </section>
+
+    <!-- =========================
+     ACHIEVEMENTS SECTION
+========================= -->
+    <section>
+      <h2>Achievements</h2>
+      <ul>
+        <li>Persistent Bravo Team Award (Sept 2024)</li>
+        <li>Persistent Bravo Team Award (Jan 2025)</li>
+        <li>Client Appreciation for critical task completion</li>
+      </ul>
+    </section>
+
+    <!-- =========================
+     EDUCATION SECTION
+========================= -->
+    <section>
+      <h2>Education</h2>
+      <p>
+        B.Tech Electrical Engineering <br />
+        YCCE Nagpur <br />
+        2021 | CGPA: 7.08
+      </p>
+    </section>
+
+    <!-- =========================
+     CONTACT SECTION
+========================= -->
+    <section class="contact">
+      <h2>Contact</h2>
+      <a href="#">Email: yourmail@example.com</a>
+      <a href="#">LinkedIn: linkedin.com/in/yourprofile</a>
+      <a href="#">GitHub: github.com/yourprofile</a>
+      <a href="#">Phone: +91-XXXXXXXXXX</a>
+    </section>
+
+    <!-- =========================
+     FOOTER
+========================= -->
+    <footer>© 2026 Pramod Tidke | Built with HTML & CSS</footer>
+  </body>
 </html>
