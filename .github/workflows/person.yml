@@ -13,3 +13,13 @@ jobs:
         run: echo "2 year of experience"
       - name: role is
         run: echo "software engineer"
+      - name: learning
+        run: echo "true"
+
+      - name: tools
+        run: echo "github, docker, python, ansible"
+
+      - name: hobbies
+        type: choice
+        options: ["coding", "travelling", "cooking", "playing"]
+        run: echo "coding, travelling, cooking, playing"
