@@ -18,8 +18,8 @@ jobs:
 
       - name: tools
         run: echo "github, docker, python, ansible"
-
       - name: hobbies
-        type: choice
-        options: ["coding", "travelling", "cooking", "playing"]
-        run: echo "coding, travelling, cooking, playing"
+        hobbies: ["coding", "music", "gaming"]
+        run: echo "coding, music, gaming"
+        env:
+          HOBBIES: ["coding", "music", "gaming"]
