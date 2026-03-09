@@ -1,5 +1,5 @@
 services:
   web:
-    image: ${DOCKERHUB_USERNAME}/my-app:latest
+    image: ${DOCKERHUB_USERNAME}/my-app:${DOCKERHUB_TAG}
     ports:
       - "80:80"
