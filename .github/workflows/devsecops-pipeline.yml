@@ -22,7 +22,14 @@ jobs:
     uses: ./.github/workflows/docker-build-push.yml
     secrets: inherit
 
+  #image scan with trivy for vulnerabilities and issues in the docker image
   trivy-scan:
     needs: build-and-push
     uses: ./.github/workflows/image-scan.yml
+    secrets: inherit
+
+    #deploy to production
+  deploy:
+    needs: trivy-scan
+    uses: ./.github/workflows/deploy-app.yml
     secrets: inherit
