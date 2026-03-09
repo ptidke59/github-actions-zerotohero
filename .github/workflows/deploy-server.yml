@@ -21,4 +21,5 @@ jobs:
             mkdir devops
             touch devops/deploy.txt
             touch devops/deploy2.txt
+            touch devops/deploy3.txt
             # Add your deployment commands here, for example:
