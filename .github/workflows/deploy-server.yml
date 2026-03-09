@@ -22,6 +22,11 @@ jobs:
           script: |
             echo "Deploying server..."
             mkdir -p devops
+            sudo apt-get update
+            sudo apt-get install docker.io -y
+            sudo apt-get install docker-compose -y
+            sudo apt-get update
+            sudo usermod -aG docker $USER && newgrp docker
             # Add your deployment commands here, for example:
 
       - name: copy the docker compose
@@ -41,12 +46,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
             echo "running the app..."
-            sudo apt-get update
-            sudo apt-get install docker.io -y
-            sudo apt-get install docker-compose -y
-            sudo apt-get update
-            sudo usermod -aG docker $USER && newgrp docker
+
             export DOCKERHUB_USERNAME=${{ vars.DOCKER_USERNAME }}
             export DOCKERHUB_TAG=${{ github.sha }}
             echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin
-            cd ~/devops && docker compose down && docker compose up -d --build --force-recreate --pull always
+            cd ~/devops 
+            sudo docker compose down && docker compose up -d --build --force-recreate --pull always
