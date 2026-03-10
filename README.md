@@ -1,4 +1,4 @@
-#SecureFlow CI
+# SecureFlow CI
 ## Secure DevSecOps CI/CD Pipeline using GitHub Actions
 
 ## Project Overview
